@@ -1,10 +1,10 @@
 package com.liangfeng.wanandroid.features.login
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.liangfeng.wanandroid.R
 import com.liangfeng.wanandroid.network.Observers
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_login.*
  * Email:liangfeng093@gmail.com
  * Desc:
  */
-class LoginFragment : Fragment() {
+class LoginFragment : androidx.fragment.app.Fragment() {
     val TAG = this.javaClass.name
     override fun onCreateView(
             inflater: LayoutInflater,

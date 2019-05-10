@@ -1,7 +1,7 @@
 package com.liangfeng.wanandroid
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     val TAG = this.javaClass.name

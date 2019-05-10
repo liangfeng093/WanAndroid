@@ -1,7 +1,7 @@
 package com.liangfeng.wanandroid
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import android.view.ViewGroup
  * Email:liangfeng093@gmail.com
  * Desc:Fragment的基类，抽取一些重复操作
  */
-abstract class BaseFragment<T> : Fragment(), IBaseFragmentView<T> {
+abstract class BaseFragment<T> : androidx.fragment.app.Fragment(), IBaseFragmentView<T> {
     var mPresenter: T? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

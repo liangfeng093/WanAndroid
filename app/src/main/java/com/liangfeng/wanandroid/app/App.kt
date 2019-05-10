@@ -1,9 +1,9 @@
 package com.liangfeng.wanandroid.app
 
 import android.content.Context
-import android.support.multidex.MultiDex
-import android.support.multidex.MultiDexApplication
-import com.liangfeng.wanandroid.LogUtils.Companion.context
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
+import com.blankj.utilcode.util.LogUtils
 import com.liangfeng.wanandroid.features.login.RemoteDateManger
 import com.xiehe.mobileportalsystem.crash.CrashHandler
 
@@ -24,9 +24,7 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        context = this
         CrashHandler.init(this, "544935678@qq.com")
-        LogUtils.init(LogUtils.VERBOSE, this)//正式上线环境level设置为LogUtils.NOLOG
         RemoteDateManger.getInstance()
         //初始化数据库
 

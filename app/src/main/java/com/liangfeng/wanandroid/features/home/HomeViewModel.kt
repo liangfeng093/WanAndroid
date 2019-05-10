@@ -1,6 +1,6 @@
 package com.liangfeng.wanandroid.features.home
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 /**
  * Created by mzf on 2018/9/28.

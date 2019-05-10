@@ -1,6 +1,6 @@
 package com.liangfeng.wanandroid
 
-import android.arch.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
 
 /**
  * Created by mzf on 2018/7/13.
