@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
+import androidx.navigation.Navigation
 import com.liangfeng.wanandroid.R
-import com.liangfeng.wanandroid.network.Observers
 import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
@@ -30,7 +28,8 @@ class LoginFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_login?.setOnClickListener {
-            RemoteDateManger?.login(LoginRequestBody("liangfeng093@gmail.com", "093liangfeng")
+            Navigation.findNavController(btn_login).navigate(R.id.action_loginFragment_to_homeFragment)
+            /*RemoteDateManger?.login(LoginRequestBody("liangfeng093@gmail.com", "093liangfeng")
                     , object : Observers.LoginObserver() {
                 override fun onNext(body: LoginResponseBody) {
                     if (body?.errorCode == -1) {//登录异常
@@ -41,7 +40,7 @@ class LoginFragment : androidx.fragment.app.Fragment() {
                         ToastUtils.showLong("登录成功")
                     }
                 }
-            })
+            })*/
         }
     }
 }

@@ -64,4 +64,6 @@ ext {
 
     HMSSDKVer = "2.6.1.301"//华为推送服务版本
 
+    navigation_version = "2.0.0"
+
 }
