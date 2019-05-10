@@ -1,5 +1,6 @@
 package com.liangfeng.wanandroid.features.login
 
+import com.liangfeng.wanandroid.base.DataContainer
 import com.liangfeng.wanandroid.bean.*
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -31,7 +32,7 @@ interface RetrofitService {
      * 首页文章列表
      */
     @GET("/article/list/{pageNumber}/json")
-    fun homeArticleList(@Path("pageNumber") pageNumber: Int): Observable<HomeArticleListRespBody>
+    fun homeArticleList(@Path("pageNumber") pageNumber: Int): Observable<DataContainer<HomeArticleListRespBody>>
 
 
     /**

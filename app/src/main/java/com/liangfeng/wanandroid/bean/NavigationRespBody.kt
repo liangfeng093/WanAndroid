@@ -33,6 +33,6 @@ data class NavigationRespBody(var errorCode: Int,
                             var userId: Int,
                             var visible: Int,
                             var zan: Int,
-                            var tags: List<HomeArticleListRespBody.Data.Datas.Tags>)
+                            var tags: List<HomeArticleListRespBody.Article.Tags>)
     }
 }

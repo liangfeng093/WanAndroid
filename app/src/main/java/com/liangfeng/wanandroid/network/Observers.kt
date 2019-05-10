@@ -1,6 +1,7 @@
 package com.liangfeng.wanandroid.network
 
 import android.util.Log
+import com.liangfeng.wanandroid.base.DataContainer
 import com.liangfeng.wanandroid.bean.*
 import com.liangfeng.wanandroid.features.login.LoginResponseBody
 import io.reactivex.Observer
@@ -34,7 +35,7 @@ open class Observers {
 
 
     open class LoginObserver : BaseObserver<LoginResponseBody>() {}
-    open class HomeArticleListObserver : BaseObserver<HomeArticleListRespBody>() {}
+    open class HomeArticleListObserver : BaseObserver<DataContainer<HomeArticleListRespBody>>() {}
     open class HomeBannerObserver : BaseObserver<HomeBannerRespBody>() {}
     open class CommonWebsiteObserver : BaseObserver<CommonWebsiteRespBody>() {}
     open class Search4HotWordsObserver : BaseObserver<Search4HotWordRespBody>() {}

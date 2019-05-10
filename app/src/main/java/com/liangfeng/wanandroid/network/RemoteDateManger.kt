@@ -125,15 +125,6 @@ class RemoteDateManger {
         fun homeArticleList(pageNumber: Int, observer: Observers.HomeArticleListObserver) {
             val TAG = "RemoteDateManger_homeArticleList"
             retrofit?.homeArticleList(pageNumber)
-                    ?.onErrorReturn {
-                        //打印异常信息
-                        LogUtils.e(TAG, ">>>>>>>EXCEPTION:" + it)
-                        it?.stackTrace?.forEach { element ->
-                            LogUtils.e(TAG, ">>>>>>>EXCEPTION_STACK:" + element)
-                        }
-                        //出现异常时，返回这个对象
-                        HomeArticleListRespBody(null, -1, "error")
-                    }
                     ?.subscribeOn(Schedulers.io())//IO线程订阅
                     ?.observeOn(AndroidSchedulers.mainThread())//主线程回调
                     ?.subscribe(observer)

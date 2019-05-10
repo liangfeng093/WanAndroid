@@ -2,13 +2,16 @@ package com.liangfeng.wanandroid.features.home
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.liangfeng.wanandroid.BaseFragment
 import com.liangfeng.wanandroid.R
+import com.liangfeng.wanandroid.base.DataContainer
 import com.liangfeng.wanandroid.bean.HomeArticleListRespBody
 import com.liangfeng.wanandroid.features.login.RemoteDateManger
 import com.liangfeng.wanandroid.network.Observers
@@ -23,6 +26,9 @@ class HomeFragment : BaseFragment<String>() {
 
 
     var drawerToggle: ActionBarDrawerToggle? = null
+
+    var adapter: HomeArticleAdapter? = null
+    var articles = mutableListOf<HomeArticleListRespBody.Article>()
 
     override fun setPresenter(presenter: String) {
     }
@@ -47,6 +53,9 @@ class HomeFragment : BaseFragment<String>() {
         //不去的话把这一行注释掉或者改成true，然后把toolbar.setNavigationIcon注释掉就行了
         drawerToggle?.isDrawerIndicatorEnabled = true
 
+        adapter = HomeArticleAdapter(R.layout.item_article, articles)
+        rv_home?.layoutManager = LinearLayoutManager(activity)
+        rv_home?.adapter = adapter
 
     }
 
@@ -66,16 +75,30 @@ class HomeFragment : BaseFragment<String>() {
 
 
         RemoteDateManger.homeArticleList(0, object : Observers.HomeArticleListObserver() {
-            override fun onNext(body: HomeArticleListRespBody) {
-                if (body?.errorCode == -1) {//首页文章列表获取失败
+            override fun onNext(t: DataContainer<HomeArticleListRespBody>) {
+                var body = t?.data
+                if (TextUtils.equals(t?.errorCode, "-1")) {
                     LogUtils.e(TAG, ">>>>>>>首页文章列表获取失败:" + body)
                     ToastUtils.showLong("首页文章列表获取失败")
-                } else {//登录成功
+                } else {
                     LogUtils.e(TAG, ">>>>>>>首页文章列表获取成功:" + body)
                     ToastUtils.showLong("首页文章列表获取成功")
-//                    adapter = HomeArticleListAdapter(R.header_layout.item_home, body?.data?.datas)
+                    articles?.clear()
+                    articles?.addAll(body?.datas!!)
+                    adapter?.notifyDataSetChanged()
                 }
+
             }
+            /*  override fun onNext(body: HomeArticleListRespBody) {
+                  if (body?.errorCode == -1) {//首页文章列表获取失败
+                      LogUtils.e(TAG, ">>>>>>>首页文章列表获取失败:" + body)
+                      ToastUtils.showLong("首页文章列表获取失败")
+                  } else {//登录成功
+                      LogUtils.e(TAG, ">>>>>>>首页文章列表获取成功:" + body)
+                      ToastUtils.showLong("首页文章列表获取成功")
+  //                    adapter = HomeArticleListAdapter(R.header_layout.item_home, body?.data?.datas)
+                  }
+              }*/
         })
 
 
