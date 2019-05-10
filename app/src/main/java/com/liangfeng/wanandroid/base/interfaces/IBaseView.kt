@@ -34,5 +34,9 @@ interface IBaseView<T> {
      * 内容视图
      */
     fun content()
+    /**
+     * 网络异常
+     */
+    fun networkException()
 
 }

@@ -1,31 +1,63 @@
 package com.liangfeng.wanandroid.features.home
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.liangfeng.wanandroid.BaseFragment
 import com.liangfeng.wanandroid.R
 import com.liangfeng.wanandroid.bean.HomeArticleListRespBody
 import com.liangfeng.wanandroid.features.login.RemoteDateManger
 import com.liangfeng.wanandroid.network.Observers
+import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by mzf on 2018/9/20.
  * Email:liangfeng093@gmail.com
  * Desc:
  */
-class HomeFragment : androidx.fragment.app.Fragment() {
+class HomeFragment : BaseFragment<String>() {
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        var view = inflater?.inflate(R.layout.fragment_home, container, false)
-        return view
+
+    var drawerToggle: ActionBarDrawerToggle? = null
+
+    override fun setPresenter(presenter: String) {
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.fragment_home
+    }
+
+    override fun initData() {
+
+
+        tool_bar?.setTitle("玩android")
+        tool_bar?.setTitleTextColor(Color.WHITE)
+        tool_bar?.contentInsetStartWithNavigation
+
+        drawerToggle = ActionBarDrawerToggle(activity, drawer_layout, tool_bar, R.string.app_name, R.string.app_name)
+
+        //通过下面这句实现toolbar和Drawer的联动：如果没有这行代码，箭头是不会随着侧滑菜单的开关而变换的（或者没有箭头），
+        // 可以尝试一下，不影响正常侧滑
+        drawerToggle?.syncState()
+        //去掉侧滑的默认图标（动画箭头图标），也可以选择不去，
+        //不去的话把这一行注释掉或者改成true，然后把toolbar.setNavigationIcon注释掉就行了
+        drawerToggle?.isDrawerIndicatorEnabled = true
+
+
+    }
+
+    override fun initListener() {
+        tool_bar?.setNavigationOnClickListener {
+            if (drawer_layout?.isDrawerOpen(GravityCompat.START)!!) {
+                drawer_layout.closeDrawer(GravityCompat.START)
+            } else {
+                drawer_layout.openDrawer(GravityCompat.START)
+            }
+        }
     }
 
 
@@ -41,7 +73,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
                 } else {//登录成功
                     LogUtils.e(TAG, ">>>>>>>首页文章列表获取成功:" + body)
                     ToastUtils.showLong("首页文章列表获取成功")
-//                    adapter = HomeArticleListAdapter(R.layout.item_home, body?.data?.datas)
+//                    adapter = HomeArticleListAdapter(R.header_layout.item_home, body?.data?.datas)
                 }
             }
         })
@@ -49,4 +81,21 @@ class HomeFragment : androidx.fragment.app.Fragment() {
 
     }
 
+    override fun emptyContent() {
+    }
+
+    override fun loading() {
+    }
+
+    override fun loadSuccess() {
+    }
+
+    override fun loadFail() {
+    }
+
+    override fun content() {
+    }
+
+    override fun networkException() {
+    }
 }
