@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface RetrofitService {
 
     companion object {
-        val BaseURL: String = "http://www.wanandroid.com"//访问接口的ip和端口
+        val BaseURL: String = "https://www.wanandroid.com"//访问接口的ip和端口
         val testBaseURL: String = "http://v.juhe.cn/"//聚合数据测试接口
         val videoUrl = BaseURL + "XXX/"//音频文件的加载路径
         val imgUrl = BaseURL + "img/"//图片的加载路径

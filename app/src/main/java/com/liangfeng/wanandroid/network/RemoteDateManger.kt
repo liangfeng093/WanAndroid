@@ -31,7 +31,8 @@ class RemoteDateManger {
     private fun initRetrofit() {
         //拦截器（打印网络请求log）
         var logInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor(HttpLogger())
-        logInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+//        logInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
         var httpInterceptor = HttpInterceptor()
         var okHttpClient: OkHttpClient = OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)//设置超时时间
