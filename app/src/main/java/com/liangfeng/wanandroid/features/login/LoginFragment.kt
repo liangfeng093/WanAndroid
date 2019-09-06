@@ -1,20 +1,28 @@
 package com.liangfeng.wanandroid.features.login
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.RadioGroup
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.liangfeng.wanandroid.R
-import com.liangfeng.wanandroid.features.login.RemoteDateManger.Companion.login
 import com.liangfeng.wanandroid.network.Observers
-import kotlinx.android.synthetic.main.fragment_login.*
+import org.jetbrains.anko.*
+import org.jetbrains.anko.constraint.layout.constraintLayout
+import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
+import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.support.v4.UI
+import org.jetbrains.anko.support.v4.find
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.HORIZONTAL as LayoutParamsHORIZONTAL
 
 /**
  * Created by mzf on 2018/9/20.
@@ -32,56 +40,106 @@ class LoginFragment : Fragment() {
 
     var isSave = false
 
+    //页面控件id
+    private val et_user_name = 1
+    private val et_pwd = 2
+    private val cb_save = 3
+    private val btn_login = 4
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        var view = inflater?.inflate(R.layout.fragment_login, container, false)
-        return view
+        return UI {
+            constraintLayout {
+                val etUserName = editText {
+                    id = et_user_name
+                    hint = getString(R.string.login_user_name_hint)
+                }.lparams(height = dip(50), width = dip(200)) {
+                    topMargin = dip(160)
+                    topToTop = PARENT_ID
+                    leftToLeft = PARENT_ID //左侧的相对定位，左侧依赖于父容器的左侧
+                    rightToRight = PARENT_ID //右侧的相对定位，右侧依赖于父容器的右侧
+                }
+
+                var etPassWord = editText {
+                    id = et_pwd
+                    hint = getString(R.string.login_pass_word_hint)
+                }.lparams(height = dip(50), width = dip(200)) {
+                    topMargin = dip(20)
+                    topToBottom = et_user_name //控件顶部依赖于其它控件的地步
+                    leftToLeft = PARENT_ID //左侧的相对定位，左侧依赖于父容器的左侧
+                    rightToRight = PARENT_ID //右侧的相对定位，右侧依赖于父容器的右侧
+                }
+
+                button(R.string.login_btn) {
+                    id = btn_login
+                    onClick {
+                        val userName = etUserName.text.toString().trim()
+                        val passWord = etPassWord.text.toString().trim()
+                        if (userName.isEmpty()) {
+                            ToastUtils.showLong(resources?.getString(R.string.login_tip_1))
+                            return@onClick
+                        }
+                        if (passWord.isEmpty()) {
+                            ToastUtils.showLong(resources?.getString(R.string.login_tip_2))
+                            return@onClick
+                        }
+                        login(userName, passWord)
+
+                    }
+                }.lparams(height = wrapContent, width = dip(200)) {
+                    leftToLeft = PARENT_ID //左侧的相对定位，左侧依赖于父容器的左侧
+                    rightToRight = PARENT_ID //右侧的相对定位，右侧依赖于父容器的右侧
+                    topToTop = PARENT_ID
+                    bottomToBottom = PARENT_ID
+                }
+
+                linearLayout {
+                    orientation = LinearLayout.HORIZONTAL
+                    checkBox {
+                        id = cb_save
+                        onCheckedChange { buttonView, isChecked ->
+                            LogUtils.e("isChecked:" + isChecked)
+                            isSave = isChecked
+                        }
+                    }.lparams(height = wrapContent, width = wrapContent) {
+
+                    }
+                    textView(R.string.login_tip_3).lparams(height = wrapContent, width = wrapContent) {
+                        gravity = Gravity.CENTER_VERTICAL
+                    }
+                }.lparams(height = wrapContent, width = wrapContent) {
+                    topToBottom = btn_login
+                    leftToLeft = btn_login
+                    topMargin = dip(20)
+                }
+
+
+            }
+        }.view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        var instance = SPUtils.getInstance()
-        var strUserName = instance?.getString(USER_NAME, "")
-        var strPwd = instance?.getString(PASS_WORD, "")
-        if (!strUserName?.isEmpty()!!) {
-            et_user_name?.setText(strUserName)
+        val instance = SPUtils.getInstance()
+        val strUserName = instance?.getString(USER_NAME, "")
+        val strPwd = instance?.getString(PASS_WORD, "")
+        if (strUserName!!.isNotEmpty()) {
+            find<EditText>(et_user_name).setText(strUserName)
         }
-        if (strPwd?.isEmpty()!!) {
-            checkBox?.isChecked = false
+        if (strPwd!!.isNotEmpty()) {
+            find<EditText>(et_pwd).setText(strPwd)
+            find<CheckBox>(cb_save).isChecked = true
         } else {
-            checkBox?.isChecked = true
-            et_pass_word?.setText(strPwd)
+            find<CheckBox>(cb_save).isChecked = false
         }
 
 
-
-        btn_login?.setOnClickListener {
-            var userName = et_user_name?.text?.toString()?.trim()
-            var passWord = et_pass_word?.text?.toString()?.trim()
-            if (userName?.isEmpty()!!) {
-                ToastUtils.showLong(resources?.getString(R.string.login_tip_1))
-                return@setOnClickListener
-            }
-            if (passWord?.isEmpty()!!) {
-                ToastUtils.showLong(resources?.getString(R.string.login_tip_2))
-                return@setOnClickListener
-            }
-            login(userName, passWord)
-        }
-
-        checkBox?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                LogUtils.e("isChecked:" + isChecked)
-                isSave = isChecked
-            }
-
-        })
     }
 
     /**
@@ -98,7 +156,7 @@ class LoginFragment : Fragment() {
                     LogUtils.e(TAG, ">>>>>>>登录成功:" + body)
                     ToastUtils.showLong("登录成功")
                     rememberUserNameAndPwd(isSave, userName, passWord)
-                    Navigation.findNavController(btn_login).navigate(R.id.action_loginFragment_to_homeFragment)
+//                    Navigation.findNavController(btn_login).navigate(R.id.action_loginFragment_to_homeFragment)
                 }
             }
         })
