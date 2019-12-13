@@ -2,19 +2,13 @@ package com.liangfeng.wanandroid.features.home
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.liangfeng.wanandroid.BaseFragment
 import com.liangfeng.wanandroid.R
-import com.liangfeng.wanandroid.base.DataContainer
 import com.liangfeng.wanandroid.bean.HomeArticleListRespBody
-import com.liangfeng.wanandroid.features.login.RemoteDateManger
-import com.liangfeng.wanandroid.network.Observers
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
@@ -30,8 +24,8 @@ class HomeFragment : BaseFragment<String>() {
     var adapter: HomeArticleAdapter? = null
     var articles = mutableListOf<HomeArticleListRespBody.Article>()
 
-    override fun setPresenter(presenter: String) {
-    }
+//    override fun setPresenter(presenter: String) {
+//    }
 
     override fun getLayout(): Int {
         return R.layout.fragment_home
@@ -73,6 +67,7 @@ class HomeFragment : BaseFragment<String>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+/*
 
         RemoteDateManger.homeArticleList(0, object : Observers.HomeArticleListObserver() {
             override fun onNext(t: DataContainer<HomeArticleListRespBody>) {
@@ -89,17 +84,8 @@ class HomeFragment : BaseFragment<String>() {
                 }
 
             }
-            /*  override fun onNext(body: HomeArticleListRespBody) {
-                  if (body?.errorCode == -1) {//首页文章列表获取失败
-                      LogUtils.e(TAG, ">>>>>>>首页文章列表获取失败:" + body)
-                      ToastUtils.showLong("首页文章列表获取失败")
-                  } else {//登录成功
-                      LogUtils.e(TAG, ">>>>>>>首页文章列表获取成功:" + body)
-                      ToastUtils.showLong("首页文章列表获取成功")
-  //                    adapter = HomeArticleListAdapter(R.header_layout.item_home, body?.data?.datas)
-                  }
-              }*/
         })
+*/
 
 
     }

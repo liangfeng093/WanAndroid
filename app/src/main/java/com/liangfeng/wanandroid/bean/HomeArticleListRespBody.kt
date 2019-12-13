@@ -38,4 +38,10 @@ data class HomeArticleListRespBody(var curPage: Int,
         data class Tags(var name: String,
                         var url: String)
     }
+
+    override fun toString(): String {
+        return "HomeArticleListRespBody(curPage=$curPage, offset=$offset, over=$over, pageCount=$pageCount, size=$size, total=$total, datas=$datas)"
+    }
+
+
 }

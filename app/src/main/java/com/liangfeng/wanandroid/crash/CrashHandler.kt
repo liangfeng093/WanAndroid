@@ -1,11 +1,10 @@
-package com.xiehe.mobileportalsystem.crash
+package com.liangfeng.wanandroid
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
-import kotlinx.coroutines.Job
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,7 +56,6 @@ class CrashHandler : Thread.UncaughtExceptionHandler {
          */
         private var feedbackEmail = ""
 
-        var job: Job? = null
 
         /**
          * 日志开关，Debug状态下开启

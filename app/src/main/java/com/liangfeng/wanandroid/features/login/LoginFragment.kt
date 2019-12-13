@@ -1,6 +1,5 @@
 package com.liangfeng.wanandroid.features.login
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,15 +13,17 @@ import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.greatwall.multimedia.network.RemoteDateManger
 import com.liangfeng.wanandroid.R
-import com.liangfeng.wanandroid.network.Observers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
 import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.find
-import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.HORIZONTAL as LayoutParamsHORIZONTAL
 
 /**
  * Created by mzf on 2018/9/20.
@@ -52,6 +53,13 @@ class LoginFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        val coroutineScope = CoroutineScope(Dispatchers.Main)
+        coroutineScope.launch(Dispatchers.IO) {
+//            Log.e("getInstance():", RemoteDateManger.getInstance().toString())
+
+            RemoteDateManger.login("liangfeng093@gmail.com", "XvuS8e4861XE")
+//            RemoteApi.login("liangfeng093@gmail.com", "XvuS8e4861XE")
+        }
         return UI {
             constraintLayout {
                 val etUserName = editText {
@@ -146,7 +154,11 @@ class LoginFragment : Fragment() {
      * 登录
      */
     fun login(userName: String, passWord: String) {
-        RemoteDateManger?.login(LoginRequestBody(userName, passWord)
+        /*val coroutineScope = CoroutineScope(Dispatchers.Main)
+        coroutineScope.launch(Dispatchers.IO) {
+            RemoteApi.login("liangfeng093@gmail.com", "XvuS8e4861XE")
+        }*/
+        /*RemoteDateManger?.login(LoginRequestBody(userName, passWord)
                 , object : Observers.LoginObserver() {
             override fun onNext(body: LoginResponseBody) {
                 if (body?.errorCode == -1) {//登录异常
@@ -159,7 +171,7 @@ class LoginFragment : Fragment() {
 //                    Navigation.findNavController(btn_login).navigate(R.id.action_loginFragment_to_homeFragment)
                 }
             }
-        })
+        })*/
     }
 
     /**

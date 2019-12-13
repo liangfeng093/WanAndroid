@@ -5,6 +5,8 @@ package com.liangfeng.wanandroid.base
  * Email:liangfeng093@gmail.com
  * Desc:json最外层字段
  */
+data class DataContainer<T>(val errorCode: String, val errorMsg: String, val data: T)
+/*
 open class DataContainer<T> {
     var errorCode: String = ""
     var errorMsg: String = ""
@@ -14,4 +16,4 @@ open class DataContainer<T> {
     }
 
 
-}
+}*/

@@ -1,5 +1,7 @@
 package com.liangfeng.wanandroid
 
+import android.view.View
+
 /**
  * Created by mzf on 2018/7/13.
  * Email:liangfeng093@gmail.com
@@ -11,7 +13,7 @@ interface IBaseFragmentView<T> {
     /**
      *
      */
-    fun setPresenter(presenter: T)
+//    fun setPresenter(presenter: T)
 
     /**
      * 获取布局文件
@@ -32,4 +34,14 @@ interface IBaseFragmentView<T> {
      * 初始化控件的监听
      */
     fun initListener()
+
+    /**
+     * 初始化ViewModel
+     */
+//    fun initVm()
+
+    /**
+     * 设置(绑定)ViewModel类型
+     */
+//    fun providerVmClass(): Class<VM>
 }
